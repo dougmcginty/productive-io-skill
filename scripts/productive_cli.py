@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Small Productive.io timesheet CLI for OpenClaw skills.
+"""Small Productive.io timesheet CLI for Productive.io skill installs.
 
 Uses only the Python standard library. Productive API reference:
 https://developer.productive.io/reference
@@ -20,7 +20,12 @@ from typing import Any
 
 
 DEFAULT_BASE_URL = "https://api.productive.io/api/v2"
-ENV_FILES = (Path.home() / ".openclaw/.env", Path.home() / ".openclaw/workspace/.env")
+ENV_FILES = (
+    Path.home() / ".config/productive-io-skill/.env",
+    Path.home() / ".productive-io-skill.env",
+    Path.home() / ".openclaw/.env",
+    Path.home() / ".openclaw/workspace/.env",
+)
 
 
 class ProductiveError(RuntimeError):

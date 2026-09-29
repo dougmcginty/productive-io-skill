@@ -13,7 +13,7 @@ This skill wraps a local stdlib Python CLI:
 
 ## Required Environment
 
-The script auto-loads variables from `~/.openclaw/.env` and then `~/.openclaw/workspace/.env` when those files exist. It also works with normal shell environment variables:
+The script works with normal shell environment variables and can also auto-load a local env file. For Claude Code installs, prefer exported variables from the shell or launcher that starts Claude Code, or use `~/.config/productive-io-skill/.env`.
 
 - `PRODUCTIVE_API_TOKEN`
 - `PRODUCTIVE_ORGANIZATION_ID`
@@ -30,18 +30,18 @@ Never ask the user to paste API tokens into chat. If credentials are missing, te
 After copying this `productive/` folder into the Claude Code skills directory, keep credentials outside the skill folder so they are not committed with the skill:
 
 ```bash
-mkdir -p ~/.openclaw
-touch ~/.openclaw/.env
-chmod 600 ~/.openclaw/.env
+mkdir -p ~/.config/productive-io-skill
+touch ~/.config/productive-io-skill/.env
+chmod 600 ~/.config/productive-io-skill/.env
 ```
 
-Add the required `PRODUCTIVE_*` values to `~/.openclaw/.env`, then verify from the installed skill folder:
+Add the required `PRODUCTIVE_*` values to `~/.config/productive-io-skill/.env`, then verify from the installed skill folder:
 
 ```bash
 python3 scripts/productive_cli.py env-check
 ```
 
-If Claude Code is launched from a shell that already exports the same variables, the `.env` file is optional.
+If Claude Code is launched from a shell that already exports the same variables, the `.env` file is optional. The CLI also keeps `~/.openclaw/.env` and `~/.openclaw/workspace/.env` as legacy fallbacks for existing OpenClaw-based installs, but new Claude Code installs should not depend on those paths.
 
 ## Common Commands
 

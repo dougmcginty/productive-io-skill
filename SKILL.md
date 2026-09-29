@@ -13,7 +13,7 @@ This skill wraps a local stdlib Python CLI:
 
 ## Required Environment
 
-The script auto-loads variables from `~/.openclaw/.env` and then `~/.openclaw/workspace/.env`:
+The script works with normal shell environment variables and can also auto-load local env files. For platform-neutral installs, prefer `~/.config/productive-io-skill/.env`. Existing OpenClaw paths are still supported as fallbacks:
 
 - `PRODUCTIVE_API_TOKEN`
 - `PRODUCTIVE_ORGANIZATION_ID`
@@ -22,6 +22,13 @@ The script auto-loads variables from `~/.openclaw/.env` and then `~/.openclaw/wo
 Optional:
 
 - `PRODUCTIVE_API_BASE`, defaults to `https://api.productive.io/api/v2`
+
+Env files are loaded after already-exported shell variables, in this order:
+
+1. `~/.config/productive-io-skill/.env`
+2. `~/.productive-io-skill.env`
+3. `~/.openclaw/.env`
+4. `~/.openclaw/workspace/.env`
 
 Never ask the user to paste API tokens into chat. If credentials are missing, tell them which environment variable is missing and that it should be configured locally.
 

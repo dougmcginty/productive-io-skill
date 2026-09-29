@@ -17,7 +17,15 @@ Each variant includes:
 
 ## Configuration
 
-Do not commit credentials. Put them in a local environment file outside the installed skill folder, such as `~/.openclaw/.env`:
+Do not commit credentials. The cleanest setup is to export these variables in the shell or launcher environment that starts Codex or Claude Code. If you prefer a file, use a neutral local config file outside the installed skill folder:
+
+```bash
+mkdir -p ~/.config/productive-io-skill
+touch ~/.config/productive-io-skill/.env
+chmod 600 ~/.config/productive-io-skill/.env
+```
+
+Add:
 
 ```env
 PRODUCTIVE_API_TOKEN=your_token_here
@@ -31,47 +39,50 @@ Optional:
 PRODUCTIVE_API_BASE=https://api.productive.io/api/v2
 ```
 
-The CLI auto-loads `~/.openclaw/.env` first and `~/.openclaw/workspace/.env` second. It also works with normal shell environment variables, which is useful if you prefer to launch Claude Code or Codex from a shell that already exports the Productive values.
+The CLI loads values in this order:
+
+1. Already-exported environment variables from the running shell or launcher
+2. `~/.config/productive-io-skill/.env`
+3. `~/.productive-io-skill.env`
+4. Legacy OpenClaw fallbacks: `~/.openclaw/.env`, then `~/.openclaw/workspace/.env`
+
+The OpenClaw fallbacks exist only for backward compatibility. New Codex and Claude Code installs should prefer exported env vars or `~/.config/productive-io-skill/.env`.
 
 ### Codex install environment
 
 1. Copy `variants/codex/productive/` into your Codex skills directory.
-2. Create the env file if it does not exist:
+2. Either export the `PRODUCTIVE_*` variables in the environment used to launch Codex, or create the neutral env file:
 
    ```bash
-   mkdir -p ~/.openclaw
-   touch ~/.openclaw/.env
-   chmod 600 ~/.openclaw/.env
+   mkdir -p ~/.config/productive-io-skill
+   touch ~/.config/productive-io-skill/.env
+   chmod 600 ~/.config/productive-io-skill/.env
    ```
 
-3. Add the `PRODUCTIVE_*` variables shown above to `~/.openclaw/.env`.
+3. Add the `PRODUCTIVE_*` variables shown above to `~/.config/productive-io-skill/.env`.
 4. From the installed skill folder, verify Codex can read the values:
 
    ```bash
    python3 scripts/productive_cli.py env-check
    ```
 
-If you do not want to use `~/.openclaw/.env`, export the same variables in the shell or launcher environment used to start Codex.
-
 ### Claude Code install environment
 
 1. Copy `variants/claude/productive/` into your Claude Code skills directory.
-2. Store credentials outside the skill folder, preferably in `~/.openclaw/.env`:
+2. Either export the `PRODUCTIVE_*` variables in the environment used to launch Claude Code, or create the neutral env file:
 
    ```bash
-   mkdir -p ~/.openclaw
-   touch ~/.openclaw/.env
-   chmod 600 ~/.openclaw/.env
+   mkdir -p ~/.config/productive-io-skill
+   touch ~/.config/productive-io-skill/.env
+   chmod 600 ~/.config/productive-io-skill/.env
    ```
 
-3. Add the `PRODUCTIVE_*` variables shown above.
+3. Add the `PRODUCTIVE_*` variables shown above to `~/.config/productive-io-skill/.env`.
 4. From the installed Claude skill folder, verify Claude Code can read the values:
 
    ```bash
    python3 scripts/productive_cli.py env-check
    ```
-
-Claude Code also works when those variables are exported in the shell environment that launches it.
 
 ## Quick Check
 
