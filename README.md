@@ -1,4 +1,4 @@
-# Productive Timesheet Skills
+# Productive.io Skill
 
 Explicit-only OpenClaw, Codex, and Claude skill variants plus a stdlib Python CLI for Productive.io timesheet work.
 
@@ -17,7 +17,7 @@ Each variant includes:
 
 ## Configuration
 
-Do not commit credentials. Put them in a local environment file such as `~/.openclaw/.env`:
+Do not commit credentials. Put them in a local environment file outside the installed skill folder, such as `~/.openclaw/.env`:
 
 ```env
 PRODUCTIVE_API_TOKEN=your_token_here
@@ -30,6 +30,48 @@ Optional:
 ```env
 PRODUCTIVE_API_BASE=https://api.productive.io/api/v2
 ```
+
+The CLI auto-loads `~/.openclaw/.env` first and `~/.openclaw/workspace/.env` second. It also works with normal shell environment variables, which is useful if you prefer to launch Claude Code or Codex from a shell that already exports the Productive values.
+
+### Codex install environment
+
+1. Copy `variants/codex/productive/` into your Codex skills directory.
+2. Create the env file if it does not exist:
+
+   ```bash
+   mkdir -p ~/.openclaw
+   touch ~/.openclaw/.env
+   chmod 600 ~/.openclaw/.env
+   ```
+
+3. Add the `PRODUCTIVE_*` variables shown above to `~/.openclaw/.env`.
+4. From the installed skill folder, verify Codex can read the values:
+
+   ```bash
+   python3 scripts/productive_cli.py env-check
+   ```
+
+If you do not want to use `~/.openclaw/.env`, export the same variables in the shell or launcher environment used to start Codex.
+
+### Claude Code install environment
+
+1. Copy `variants/claude/productive/` into your Claude Code skills directory.
+2. Store credentials outside the skill folder, preferably in `~/.openclaw/.env`:
+
+   ```bash
+   mkdir -p ~/.openclaw
+   touch ~/.openclaw/.env
+   chmod 600 ~/.openclaw/.env
+   ```
+
+3. Add the `PRODUCTIVE_*` variables shown above.
+4. From the installed Claude skill folder, verify Claude Code can read the values:
+
+   ```bash
+   python3 scripts/productive_cli.py env-check
+   ```
+
+Claude Code also works when those variables are exported in the shell environment that launches it.
 
 ## Quick Check
 

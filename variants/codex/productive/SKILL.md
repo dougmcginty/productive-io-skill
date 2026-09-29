@@ -25,6 +25,24 @@ Optional:
 
 Never ask the user to paste API tokens into chat. If credentials are missing, tell them which environment variable is missing and that it should be configured locally.
 
+### Codex install setup
+
+After copying this `productive/` folder into the Codex skills directory, keep credentials outside the skill folder so they are not committed with the skill:
+
+```bash
+mkdir -p ~/.openclaw
+touch ~/.openclaw/.env
+chmod 600 ~/.openclaw/.env
+```
+
+Add the required `PRODUCTIVE_*` values to `~/.openclaw/.env`, then verify from the installed skill folder:
+
+```bash
+python3 scripts/productive_cli.py env-check
+```
+
+If Codex is launched from a shell that already exports the same variables, the `.env` file is optional.
+
 ## Common Commands
 
 Check configuration without making an API call:
